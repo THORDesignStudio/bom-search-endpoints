@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Plugin Name: 	Business Officer Search Endpoint
+ * Plugin Name: 	Business Officer Search Endpoints
  * Plugin URI:		http://www.thor-studio.com/
  * Description:	  Custom post-types, menus, filters, image-sizing and taxonomies for the Business Officer wordpress site.
- * Version:		    0.1.0
+ * Version:		    1.0.0
  * Author:			  John Serrao
  * Author URI:		https://www.thor.design
  * License:		    CC Attribution-ShareAlike License
@@ -30,7 +30,7 @@
  * 
  *  These endpoints map to the 4 main custom post-types in the BOM WordPress install.
  *  They are similar yet different in the data models so each deserves its own endpoint
- 
+ *
  *  Technically on the BOM website there are 5 departments (https://www.businessofficermagazine.org/department/)
  *    At the data level, there are 3: departments, nacubo-notes and business-intel
  *    The features and departments post-types have similar data models
