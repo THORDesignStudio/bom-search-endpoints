@@ -73,6 +73,9 @@
           $count++;
           $nacubo_notes_key = 'nacubo-notes-' . (string)$count; 
 
+          // NACUBO NOTES PERMALINK
+          $nn_array[$nacubo_notes_key]['url'] = get_the_permalink();
+
           // NACUBO NOTES TITLE
           $nn_array[$nacubo_notes_key]['title'] = get_the_title();
 

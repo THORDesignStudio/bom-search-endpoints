@@ -74,7 +74,7 @@
           $business_intel_key = 'business-intel-' . (string)$count; 
 
           // BIZ INTEL PERMALINK
-          $bi_array[$business_intel_key]['url'] = str_replace('\/', '/', get_the_permalink());
+          $bi_array[$business_intel_key]['url'] = get_the_permalink();
 
           // BIZ INTEL TITLE
           $bi_array[$business_intel_key]['title'] = get_the_title();

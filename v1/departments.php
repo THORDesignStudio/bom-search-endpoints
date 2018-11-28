@@ -75,6 +75,9 @@
           $count++;
           $departments_key = 'departments-' . (string)$count; 
 
+          // DEPARTMENTS PERMALINK
+          $departments_array[$departments_key]['url'] = get_the_permalink();
+
           // DEPARTMENTS TITLE
           $departments_array[$departments_key]['title'] = get_the_title();
 

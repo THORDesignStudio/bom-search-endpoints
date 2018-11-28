@@ -74,6 +74,9 @@
           $count++;
           $features_key = 'features-' . (string)$count; 
 
+          // FEATURES PERMALINK
+          $features_array[$features_key]['url'] = get_the_permalink();
+
           // FEATURES TITLE
           $features_array[$features_key]['title'] = get_the_title();
 
