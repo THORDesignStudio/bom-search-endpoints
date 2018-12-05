@@ -1,16 +1,13 @@
 # Business Officer Search Endpoint API
-====
 Custom post-type API extension of the [WordPress REST API](https://developer.wordpress.org/rest-api/) for the [Business Officer website](https://www.businessofficermagazine.org/)
 
 
 ## Installation
-====
 1. Copy the `bom-search-endpoints` folder into your `wp-content/plugins` folder
 2. Activate the `BOM Search Endpoints` plugin via the plugin admin page (please note this plugin will not work without the `Business Officer Magazine Custom Plugin`)
 
 
 ## Endpoints
-====
 
 | Endpoint | READ | WRITE | Request
 |----------|:--------:|:--------:|:--------:|
@@ -28,7 +25,6 @@ Note: on the BOM website there are [5 departments](https://www.businessofficerma
 
 
 ## Environments
-====
 Business Officer Magazine is hosted on [Pantheon](https://pantheon.io/), which automatically creates three environments for their sites. BOM uses a local development environment, which turns DEV into a staging environment.
 
 * DEV / STAGING: [https://dev-business-officer-magazine.pantheonsite.io/](https://dev-business-officer-magazine.pantheonsite.io/)
@@ -38,7 +34,6 @@ These endpoints can be test against DEV and when approved, will promote up to pr
 
 
 ## Namespace
-===
 The full namespace of the API:
 * `/wp-json/bom/v1`
  
@@ -50,7 +45,6 @@ However, `v1` can be changed inside of each endpoint - and should be if you enha
 
 
 ## Examples
-===
 
 ### Business Intel
 
@@ -58,7 +52,7 @@ Endpoint: `/wp-json/bom/v1/business-intel`
 
 Schema:
 
-```json
+```
 {
   "business-intel-##": {
     "abstract": null,
@@ -201,7 +195,7 @@ Endpoint: `/wp-json/bom/v1/departments`
 
 Schema:
 
-```json
+```
 {
   "department-item-#": {
     "abstract": string,
@@ -286,7 +280,7 @@ Endpoint: `/wp-json/bom/v1/features`
 
 Schema:
 
-```json
+```
 {
   "feature-item-#": {
      "abstract": string,
@@ -379,7 +373,7 @@ Endpoint: `/wp-json/bom/v1/nacubo-notes`
 
 Schema:
 
-```json
+```
 {
   "nacubo-notes-##": {
     "abstract": null,
