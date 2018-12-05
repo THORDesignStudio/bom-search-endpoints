@@ -11,10 +11,10 @@ Custom post-type API extension of the [WordPress REST API](https://developer.wor
 
 | Endpoint | READ | WRITE | Request
 |----------|:--------:|:--------:|:--------:|
-| /wp-json/bom/v1/business-intel | ![yes] | ![no] | GET |
-| /wp-json/bom/v1/departments | ![yes] | ![no] | GET |
-| /wp-json/bom/v1/features | ![yes] | ![no] | GET |
-| /wp-json/bom/v1/nacubo-notes | ![yes] | ![no] | GET |
+| /wp-json/bom/v1/business-intel | yes | no | GET |
+| /wp-json/bom/v1/departments | yes | no | GET |
+| /wp-json/bom/v1/features | yes | no | GET |
+| /wp-json/bom/v1/nacubo-notes | yes | no | GET |
 
 Params:
 * These endpoints require no arguments; just hit them and they will return all results for that post-type.
