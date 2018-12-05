@@ -73,21 +73,40 @@
           $count++;
           $nacubo_notes_key = 'nacubo-notes-' . (string)$count; 
 
-          // NACUBO NOTES PERMALINK
-          $nn_array[$nacubo_notes_key]['url'] = get_the_permalink();
+          // NACUBO NOTES ABSTRACT
+          $nn_array[$nacubo_notes_key]['abstract'] = null;
 
-          // NACUBO NOTES TITLE
-          $nn_array[$nacubo_notes_key]['title'] = get_the_title();
+          // NACUBO NOTES AUTHOR
+          $nn_array[$nacubo_notes_key]['author'] = null;
 
-          // NN DATE
-          $nn_array[$nacubo_notes_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          // NACUBO NOTES CATEGORY
+          $nn_array[$nacubo_notes_key]['category'] = 'nacubo-notes';
+
+          // NACUBO NOTES CONTENT
+          $nn_array[$nacubo_notes_key]['content'] = null;
+
+          // NACUBO NOTES IMAGE
+          $nn_array[$nacubo_notes_key]['image'] = null;
 
           // NACUBO NOTES ISSUE
           $term = get_field('issue');
           $nn_array[$nacubo_notes_key]['issue'] = $term->name;
 
-          // NACUBO NOTES DEPARTMENT
-          $nn_array[$nacubo_notes_key]['category'] = 'nacubo-notes';
+          // NACUBO NOTES MODIFIED DATE
+          $nn_array[$nacubo_notes_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
+
+          // NACUBO NOTES PUBLICATION DATE
+          $nn_array[$nacubo_notes_key]['publication-date'] = get_the_date('Y-m-d', $post);
+
+          // NACUBO NOTES TITLE
+          $nn_array[$nacubo_notes_key]['title'] = get_the_title();
+
+          // BIZ INTEL TOPICS
+          $nn_array[$nacubo_notes_key]['topic-group'] = null;
+          
+          // NACUBO NOTES URL
+          $nn_array[$nacubo_notes_key]['url'] = get_the_permalink();
+
 
           // NACUBO NOTES CONTENT
           if( have_rows('note_section') ) {
@@ -99,14 +118,50 @@
               //Make a key for each grouping of Nacubo Notes content
               $content_key = 'content-group-' . (string)$count_notes;  
 
-              // NACUBO NOTES SUBTITLE
-              $subtitle = get_sub_field('title');
-              $nn_array[$nacubo_notes_key][$content_key]['subtitle'] = $subtitle;
-              
+              // NACUBO NOTES ABSTRACT
+              $nn_array[$nacubo_notes_key][$content_key]['abstract'] = substr(wp_strip_all_tags(get_sub_field('content')), 0, 255) . ' ...';;
+
+              // NACUBO NOTES AUTHOR
+              $nn_array[$nacubo_notes_key][$content_key]['author'] = 'NACUBO Editorial Team';
+
+              // NACUBO NOTES CATEGORY
+              $nn_array[$nacubo_notes_key][$content_key]['category'] = 'nacubo-notes';
+
               // NACUBO NOTES CONTENT
               $main_content = get_sub_field('content');
               $nn_array[$nacubo_notes_key][$content_key]['content'] = wp_strip_all_tags($main_content);
 
+              // NACUBO NOTES IMAGE
+              $primaryImage[$content_key] = get_sub_field('image');
+              if($primaryImage) {
+                $sizedImage = wp_get_attachment_image_src( $primaryImage[$content_key], 'small' );
+                $nn_array[$nacubo_notes_key][$content_key]['image-url'] = $sizedImage[0];
+              }
+
+              // NACUBO NOTES ISSUE
+              $nn_array[$nacubo_notes_key][$content_key]['issue'] = $nn_array[$nacubo_notes_key]['issue']; 
+
+              // NACUBO NOTES MODIFIED DATE
+              $nn_array[$nacubo_notes_key][$content_key]['modified-date'] = $nn_array[$nacubo_notes_key]['modified-date'];
+
+              // NACUBO NOTES PUBLICATION DATE
+              $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['publication-date'];
+
+              // NACUBO NOTES TITLE
+              $title[$content_key] = get_sub_field('title');
+              $nn_array[$nacubo_notes_key][$content_key]['title'] = $title[$content_key];
+        
+              // NACUBO NOTES TOPICS
+              $nn_array[$nacubo_notes_key][$content_key]['topic-group'] = null;
+
+              // NACUBO NOTES URL
+              $headline_cleaned = strtolower($title[$content_key]);
+              $headline_cleaned = preg_replace("/[^a-z0-9_\s-]/", "", $headline_cleaned); // remove non-alphanumerics
+              $headline_cleaned = preg_replace("/[\s-]+/", " ", $headline_cleaned); // cleans up whitespace
+              $headline_cleaned = preg_replace("/[\s_]/", "-", $headline_cleaned); // convert whitespace + underscore to dash
+              $headline_url = get_the_permalink() . '#' . $headline_cleaned;
+              $nn_array[$nacubo_notes_key][$content_key]['url'] = $headline_url;
+              
               // Cast $count_notes back to integer
               $count_notes = (int)$count_notes;
 

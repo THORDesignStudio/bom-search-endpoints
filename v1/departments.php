@@ -75,30 +75,12 @@
           $count++;
           $departments_key = 'departments-' . (string)$count; 
 
-          // DEPARTMENTS PERMALINK
-          $departments_array[$departments_key]['url'] = get_the_permalink();
-
-          // DEPARTMENTS TITLE
-          $departments_array[$departments_key]['title'] = get_the_title();
-
-          // DEPARTMENTS SUBTITLE
-          $departments_subtitle = get_field('subtitle');
-          $departments_array[$departments_key]['subtitle'] = get_the_title();
-
-          // DEPARTMENTS DATE
-          $departments_array[$departments_key]['publication-date'] = get_the_date('Y-m-d', $post);
-
-          // DEPARTMENTS ISSUE
-          $department_issue = get_field('issue');
-          $departments_array[$departments_key]['issue'] = $department_issue->name;
-
-          // DEPARTMENTS DEPARTMENT
-          // we're calling it category in the endpoint for consistency
-          $department_term = get_field('department');
-          $departments_array[$departments_key]['category'] = $department_term->name;
+          // DEPARTMENTS ABSTRACT
+          $departments_array[$departments_key]['abstract'] = substr(wp_strip_all_tags(get_field('main_content_block')), 0, 255) . ' ...';
 
           // DEPARTMENTS AUTHOR
           $department_author_field = get_field('author');
+          $department_author_field_single = get_field('one_time_author');
           $department_author_field_final = "By "; // a string we'll add onto
         
           if ($department_author_field) {
@@ -112,10 +94,36 @@
                 $department_author_field_final = $department_author_field_final . $department_author_field[$i]['display_name'] . ' and ';
               }
             }
+          } elseif ($department_author_field_single) {
+            $department_author_field_final = $department_author_field_final . $department_author_field_single;
           } else {
-            $department_author_field_final = $department_author_field_final . get_field('one_time_author');
+            $department_author_field_final = null;
           }
           $departments_array[$departments_key]['author'] = $department_author_field_final;
+
+          // DEPARTMENTS CATEGORY
+          // we're calling it category in the endpoint for consistency
+          $department_term = get_field('department');
+          $departments_array[$departments_key]['category'] = $department_term->name;
+
+          // DEPARTMENTS CONTENT
+          $department_content = get_field('main_content_block');
+          $departments_array[$departments_key]['content'] = wp_strip_all_tags($department_content);
+
+          // DEPARTMENT IMAGE
+          $primaryImage = get_field('header_image');
+          $sizedImage = wp_get_attachment_image_src( $primaryImage, 'small' );
+          $departments_array[$departments_key]['image-url'] = $sizedImage[0];
+
+          // DEPARTMENTS ISSUE
+          $department_issue = get_field('issue');
+          $departments_array[$departments_key]['issue'] = $department_issue->name;
+
+          // DEPARTMENTS MODIFIED DATE
+          $departments_array[$departments_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
+
+          // DEPARTMENTS PUBLICATION DATE
+          $departments_array[$departments_key]['publication-date'] = get_the_date('Y-m-d', $post);
 
           // DEPARTMENT TOPICS
           $department_topic_objects = get_field('topics');
@@ -131,11 +139,15 @@
 
             // Reset count_sidebars for next node
             $count_topics = 0;
+          } else {
+            $departments_array[$departments_key]['topic-group'] = null;
           }
 
-          // DEPARTMENTS CONTENT
-          $department_content = get_field('main_content_block');
-          $departments_array[$departments_key]['content'] = wp_strip_all_tags($department_content);
+          // DEPARTMENTS TITLE
+          $departments_array[$departments_key]['title'] = get_the_title();
+
+          // DEPARTMENTS URL
+          $departments_array[$departments_key]['url'] = get_the_permalink();
 
           // DEPARTMENTS SIDEBARS
           if( have_rows('sidebars') ) {
@@ -146,14 +158,14 @@
               
               //Make a key for each grouping of DEPARTMENTS content
               $sidebar_key = 'sidebar-group-' . (string)$count_sidebars;  
-
-              // DEPARTMENTS SUBTITLE
-              $sidebar_subtitle = get_sub_field('sidebar_title');
-              $departments_array[$departments_key][$sidebar_key]['subtitle'] = $sidebar_subtitle;
               
               // DEPARTMENTS CONTENT
               $sidebar_main_content = get_sub_field('sidebar_body');
               $departments_array[$departments_key][$sidebar_key]['content'] = wp_strip_all_tags($sidebar_main_content);
+
+              // DEPARTMENTS TITLE
+              $sidebar_subtitle = get_sub_field('sidebar_title');
+              $departments_array[$departments_key][$sidebar_key]['title'] = $sidebar_subtitle;
 
               // Cast $count_sidebars back to integer
               $count_sidebars = (int)$count_sidebars;
@@ -174,13 +186,18 @@
               //Make a key for each grouping of DEPARTMENTS content
               $pullquotes_key = 'pullquote-group-' . (string)$count_pullquotes;  
 
-              // DEPARTMENTS SUBTITLE
+              // DEPARTMENTS PQ AUTHOR
+              $pullquotes_main_content = get_sub_field('pull_quote_attribution');
+
+              if($pullquotes_main_content) {
+                $departments_array[$departments_key][$pullquotes_key]['author'] = wp_strip_all_tags($pullquotes_main_content);
+              } else {
+                $departments_array[$departments_key][$pullquotes_key]['author'] = null;
+              }
+
+              // DEPARTMENTS PQ CONTENT
               $pullquotes_subtitle = get_sub_field('pull_quote_text');
               $departments_array[$departments_key][$pullquotes_key]['content'] = $pullquotes_subtitle;
-              
-              // DEPARTMENTS CONTENT
-              $pullquotes_main_content = get_sub_field('pull_quote_attribution');
-              $departments_array[$departments_key][$pullquotes_key]['author'] = wp_strip_all_tags($pullquotes_main_content);
 
               // Cast $count_pullquotes back to integer
               $count_pullquotes = (int)$count_pullquotes;

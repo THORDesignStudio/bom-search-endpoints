@@ -74,26 +74,8 @@
           $count++;
           $features_key = 'features-' . (string)$count; 
 
-          // FEATURES PERMALINK
-          $features_array[$features_key]['url'] = get_the_permalink();
-
-          // FEATURES TITLE
-          $features_array[$features_key]['title'] = get_the_title();
-
-          // FEATURES SUBTITLE
-          $features_subtitle = get_field('subtitle');
-          $features_array[$features_key]['subtitle'] = get_the_title();
-
-          // FEATURES DATE
-          $features_array[$features_key]['publication-date'] = get_the_date('Y-m-d', $post);
-
-          // FEATURES ISSUE
-          $features_issue = get_field('issue');
-          $features_array[$features_key]['issue'] = $features_issue->name;
-
-          // FEATURES CATEGORY
-          // we're calling it category in the endpoint for consistency
-          $features_array[$features_key]['category'] = 'features';
+          // FEATURES ABSTRACT
+          $features_array[$features_key]['abstract'] = substr(wp_strip_all_tags(get_field('main_content_block')), 0, 255) . ' ...';
 
           // FEATURES AUTHOR
           $features_author_field = get_field('author');
@@ -113,9 +95,35 @@
           } else {
             $features_author_field_final = $features_author_field_final . get_field('one_time_author');
           }
-          $features_array[$features_key]['author'] = $features_author_field_final;
+          $features_array[$features_key]['author'] = $features_author_field_final;          
 
-          // DEPARTMENT TOPICS
+          // FEATURES CATEGORY
+          // we're calling it category in the endpoint for consistency
+          $features_array[$features_key]['category'] = 'features';
+
+          // FEATURES CONTENT
+          $features_content = get_field('main_content_block');
+          $features_array[$features_key]['content'] = wp_strip_all_tags($features_content);          
+
+          // FEATURES IMAGE
+          $primaryImage = get_field('header_image');
+          $sizedImage = wp_get_attachment_image_src( $primaryImage, 'small' );
+          $features_array[$features_key]['image-url'] = $sizedImage[0];          
+
+          // FEATURES ISSUE
+          $features_issue = get_field('issue');
+          $features_array[$features_key]['issue'] = $features_issue->name;          
+
+          // FEATURES MODIFIED DATE
+          $features_array[$features_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
+
+          // FEATURES PUBLICATION DATE
+          $features_array[$features_key]['publication-date'] = get_the_date('Y-m-d', $post);
+
+          // FEATURES TITLE
+          $features_array[$features_key]['title'] = get_the_title();
+
+          // FEATURES TOPICS
           $features_topic_objects = get_field('topics');
 
           // Loop over each feature topic, adding into the big array we'll output as the API response
@@ -129,11 +137,12 @@
 
             // Reset count_sidebars for next node
             $count_topics = 0;
+          } else {
+            $features_array[$features_key]['topic-group'] = null;
           }
 
-          // FEATURES CONTENT
-          $features_content = get_field('main_content_block');
-          $features_array[$features_key]['content'] = wp_strip_all_tags($features_content);
+          // FEATURES URL
+          $features_array[$features_key]['url'] = get_the_permalink();
 
           // FEATURES SIDEBARS
           if( have_rows('sidebars') ) {
@@ -144,14 +153,14 @@
               
               //Make a key for each grouping of FEATURES content
               $sidebar_key = 'sidebar-group-' . (string)$count_sidebars;  
-
-              // FEATURES SUBTITLE
-              $sidebar_subtitle = get_sub_field('sidebar_title');
-              $features_array[$features_key][$sidebar_key]['subtitle'] = $sidebar_subtitle;
               
               // FEATURES CONTENT
               $sidebar_main_content = get_sub_field('sidebar_body');
               $features_array[$features_key][$sidebar_key]['content'] = wp_strip_all_tags($sidebar_main_content);
+
+              // FEATURES TITLE
+              $sidebar_subtitle = get_sub_field('sidebar_title');
+              $features_array[$features_key][$sidebar_key]['title'] = $sidebar_subtitle;
 
               // Cast $count_sidebars back to integer
               $count_sidebars = (int)$count_sidebars;
@@ -172,14 +181,18 @@
               //Make a key for each grouping of FEATURES content
               $pullquotes_key = 'pullquote-group-' . (string)$count_pullquotes;  
 
-              // FEATURES SUBTITLE
+              // FEATURES AUTHOR
+              $pullquotes_main_content = get_sub_field('pull_quote_attribution');
+              if($pullquotes_main_content) {
+                $features_array[$features_key][$pullquotes_key]['author'] = wp_strip_all_tags($pullquotes_main_content);
+              } else {
+                $features_array[$features_key][$pullquotes_key]['author'] = null;
+              }
+
+              // FEATURES CONTENT
               $pullquotes_subtitle = get_sub_field('pull_quote_text');
               $features_array[$features_key][$pullquotes_key]['content'] = $pullquotes_subtitle;
               
-              // FEATURES CONTENT
-              $pullquotes_main_content = get_sub_field('pull_quote_attribution');
-              $features_array[$features_key][$pullquotes_key]['author'] = wp_strip_all_tags($pullquotes_main_content);
-
               // Cast $count_pullquotes back to integer
               $count_pullquotes = (int)$count_pullquotes;
 
