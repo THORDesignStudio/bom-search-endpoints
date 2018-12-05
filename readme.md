@@ -187,8 +187,6 @@ Response example (long text strings are truncated in this example):
 }
 ```
 
-===
-
 ### Departments
 
 Endpoint: `/wp-json/bom/v1/departments`
@@ -271,8 +269,6 @@ Response example (long text strings are truncated in this example):
   }
 }
 ```
-
-===
 
 ### Features
 
@@ -364,8 +360,6 @@ Response example (long text strings are truncated in this example):
   }
 }
 ```
-
-===
 
 ### Nacubo Notes
 
