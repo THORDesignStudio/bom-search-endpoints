@@ -96,7 +96,9 @@
           $nn_array[$nacubo_notes_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
 
           // NACUBO NOTES PUBLICATION DATE
-          $nn_array[$nacubo_notes_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          // as of v1.2, publication data is now the same as issue date
+          // $nn_array[$nacubo_notes_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          $nn_array[$nacubo_notes_key]['publication-date'] = $term->name;
 
           // NACUBO NOTES TITLE
           $nn_array[$nacubo_notes_key]['title'] = get_the_title();
@@ -145,7 +147,9 @@
               $nn_array[$nacubo_notes_key][$content_key]['modified-date'] = $nn_array[$nacubo_notes_key]['modified-date'];
 
               // NACUBO NOTES PUBLICATION DATE
-              $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['publication-date'];
+              // as of v1.2, publication data is now the same as issue date
+              // $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['publication-date'];
+              $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['issue']; 
 
               // NACUBO NOTES TITLE
               $title[$content_key] = get_sub_field('title');

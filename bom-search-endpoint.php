@@ -4,7 +4,7 @@
  * Plugin Name: 	Business Officer Search Endpoints
  * Plugin URI:		http://www.thor-studio.com/
  * Description:	  Custom post-types, menus, filters, image-sizing and taxonomies for the Business Officer wordpress site.
- * Version:		    1.1.0
+ * Version:		    1.2.0
  * Author:			  John Serrao
  * Author URI:		https://www.thor.design
  * License:		    CC Attribution-ShareAlike License
@@ -18,6 +18,7 @@
  * 0.1.0: Setup custom endpoint for all site articles, all issues
  * 1.0.0: Refactored into separate files for the endpoints
  * 1.1.0: Updated for Mindshift spec requests
+ * 1.2.0: In all the endpoints, the publication-date date needs to be changed to be the issue date
  * 
  * 
  * ##################################

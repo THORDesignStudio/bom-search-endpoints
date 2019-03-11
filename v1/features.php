@@ -118,7 +118,9 @@
           $features_array[$features_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
 
           // FEATURES PUBLICATION DATE
-          $features_array[$features_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          // as of v1.2, publication data is now the same as issue date
+          // $features_array[$features_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          $features_array[$features_key]['publication-date'] = $features_issue->name;
 
           // FEATURES TITLE
           $features_array[$features_key]['title'] = get_the_title();

@@ -123,7 +123,9 @@
           $departments_array[$departments_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
 
           // DEPARTMENTS PUBLICATION DATE
-          $departments_array[$departments_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          // as of v1.2, publication data is now the same as issue date
+          // $departments_array[$departments_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          $departments_array[$departments_key]['publication-date'] = $department_issue->name;
 
           // DEPARTMENT TOPICS
           $department_topic_objects = get_field('topics');

@@ -95,8 +95,10 @@
           // BIZ INTEL MODIFIED DATE
           $bi_array[$business_intel_key]['modified-date'] = get_the_modified_date('Y-m-d', $post);
           
-          // BIZ INTEL DATE
-          $bi_array[$business_intel_key]['publication-date'] = get_the_date('Y-m-d', $post);          
+          // BIZ INTEL PUBLICATION DATE
+          // as of v1.2, publication date is now the same as issue date
+          // $bi_array[$business_intel_key]['publication-date'] = get_the_date('Y-m-d', $post);
+          $bi_array[$business_intel_key]['publication-date'] = $term->name;
 
           // BIZ INTEL TITLE
           $bi_array[$business_intel_key]['title'] = get_the_title();
@@ -165,7 +167,9 @@
               $bi_array[$business_intel_key][$content_key]['modified-date'] = $bi_array[$business_intel_key]['modified-date'];
           
               // BIZ INTEL PUBLICATION DATE
-              $bi_array[$business_intel_key][$content_key]['publication-date'] = $bi_array[$business_intel_key]['publication-date'];
+              // as of v1.2, publication date is now the same as issue date
+              // $bi_array[$business_intel_key][$content_key]['publication-date'] = $bi_array[$business_intel_key]['publication-date'];
+              $bi_array[$business_intel_key][$content_key]['publication-date'] = $bi_array[$business_intel_key]['issue'];
 
               // BIZ INTEL TITLE
               $bi_subtitle = get_sub_field('title'); // kicker is really a topic tag for Bom
@@ -200,6 +204,7 @@
           }
 
           // BIZ INTEL FAST FACTS - repeat of a lot of the same info, but in the fast facts array
+          // as of v1.2, publication date is now the same as issue date
           $bi_array[$business_intel_key]['fast-fact']['abstract'] = substr(sanitize_text_field(wp_strip_all_tags(get_field('fast_fact'))), 0, 255) . ' ...';
           $bi_array[$business_intel_key]['fast-fact']['author'] = 'NACUBO Editorial Team';
           $bi_array[$business_intel_key]['fast-fact']['category'] = $bi_array[$business_intel_key]['category'];
@@ -207,12 +212,13 @@
           $bi_array[$business_intel_key]['fast-fact']['image'] = null;
           $bi_array[$business_intel_key]['fast-fact']['issue'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['fast-fact']['modified-date'] = $bi_array[$business_intel_key]['modified-date'];
-          $bi_array[$business_intel_key]['fast-fact']['publication-date'] = $bi_array[$business_intel_key]['publication-date'];
+          $bi_array[$business_intel_key]['fast-fact']['publication-date'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['fast-fact']['title'] = $bi_array[$business_intel_key]['title'] . " - Fast Fact";
           $bi_array[$business_intel_key]['fast-fact']['topics'] = null;
           $bi_array[$business_intel_key]['fast-fact']['url'] = $bi_array[$business_intel_key]['url'] . "#fast-fact";
 
           // BIZ INTEL QUICK CLICKS - repeat of a lot of the same info, but in the quick clicks array
+          // as of v1.2, publication date is now the same as issue date
           $bi_array[$business_intel_key]['quick-clicks']['abstract'] = substr(sanitize_text_field(wp_strip_all_tags(get_field('quick_clicks'))), 0, 255) . ' ...';
           $bi_array[$business_intel_key]['quick-clicks']['author'] = 'NACUBO Editorial Team';
           $bi_array[$business_intel_key]['quick-clicks']['category'] = $bi_array[$business_intel_key]['category'];
@@ -220,7 +226,7 @@
           $bi_array[$business_intel_key]['quick-clicks']['image'] = null;
           $bi_array[$business_intel_key]['quick-clicks']['issue'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['quick-clicks']['modified-date'] = $bi_array[$business_intel_key]['modified-date'];
-          $bi_array[$business_intel_key]['quick-clicks']['publication-date'] = $bi_array[$business_intel_key]['publication-date'];
+          $bi_array[$business_intel_key]['quick-clicks']['publication-date'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['quick-clicks']['title'] = $bi_array[$business_intel_key]['title'] . " - Quick Clicks";
           $bi_array[$business_intel_key]['quick-clicks']['topics'] = null;
           $bi_array[$business_intel_key]['quick-clicks']['url'] = $bi_array[$business_intel_key]['url'] . "#quick-clicks";
