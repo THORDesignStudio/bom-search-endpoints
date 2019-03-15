@@ -1,6 +1,14 @@
 <?php
   /**
-   * FEATURES
+   * FEATURES Endpoint
+   */
+
+  /**
+   * Gives us access to issue > date converter utility
+   */
+  include(plugin_dir_path( __FILE__ ) . 'util/date-converter.php');
+
+  /**
    * Extend WP_REST_Controller
    */
   class Features_Posts_Controller extends WP_REST_Controller {
@@ -39,6 +47,8 @@
     public function get_items_permissions_check( $request ) {
       return true;
     }
+
+
     /**
      * FEATURES
      * Get a collection of all items
@@ -120,7 +130,7 @@
           // FEATURES PUBLICATION DATE
           // as of v1.2, publication data is now the same as issue date
           // $features_array[$features_key]['publication-date'] = get_the_date('Y-m-d', $post);
-          $features_array[$features_key]['publication-date'] = $features_issue->name;
+          $features_array[$features_key]['publication-date'] = date_conversion( $features_issue->name );
 
           // FEATURES TITLE
           $features_array[$features_key]['title'] = get_the_title();
