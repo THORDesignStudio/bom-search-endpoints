@@ -12,8 +12,8 @@
   function date_conversion( $issue_date ) {
     // Set some variables for day, month and year
     $day = "01"; // day will always just be first of the month, we don't have day specific values
-    $month = null; 
-    $year = null;
+    $month = "01"; 
+    $year = "2017";
 
     // Break issue_date up into month and year, hopefully
     $separated_dates = explode(" ", $issue_date);
@@ -27,8 +27,6 @@
         $month = strtolower($separated_date);
       } 
     }
-
-    print_r($year);
 
     // Sniff month | month set options, do manual reformat
     switch ($month) {
@@ -77,8 +75,8 @@
       default:
         $month = "01";
     }
-  }
 
-  // concat it back to together YYYY-MM-DD
-  return $year . '-' . $month . '-' . $day;
+    // concat it back to together YYYY-MM-DD
+    return $year . '-' . $month . '-' . $day;
+  }
 ?>

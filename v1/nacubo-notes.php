@@ -1,6 +1,14 @@
 <?php
   /**
-   * NACUBO NOTES
+   * NACUBO NOTES Endpoint
+   */
+
+  /**
+   * include for date_conversion utility
+   */
+  include_once(plugin_dir_path( __DIR__ ) . 'util/date-converter.php');
+
+  /**
    * Extend WP_REST_Controller
    */
   class NN_Posts_Controller extends WP_REST_Controller {
@@ -98,7 +106,7 @@
           // NACUBO NOTES PUBLICATION DATE
           // as of v1.2, publication data is now the same as issue date
           // $nn_array[$nacubo_notes_key]['publication-date'] = get_the_date('Y-m-d', $post);
-          $nn_array[$nacubo_notes_key]['publication-date'] = $term->name;
+          $nn_array[$nacubo_notes_key]['publication-date'] = date_conversion( $term->name );
 
           // NACUBO NOTES TITLE
           $nn_array[$nacubo_notes_key]['title'] = get_the_title();
@@ -149,7 +157,7 @@
               // NACUBO NOTES PUBLICATION DATE
               // as of v1.2, publication data is now the same as issue date
               // $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['publication-date'];
-              $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = $nn_array[$nacubo_notes_key]['issue']; 
+              $nn_array[$nacubo_notes_key][$content_key]['publication-date'] = date_conversion( $nn_array[$nacubo_notes_key]['issue'] ); 
 
               // NACUBO NOTES TITLE
               $title[$content_key] = get_sub_field('title');

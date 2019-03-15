@@ -3,8 +3,8 @@
 /**
  * Plugin Name: 	Business Officer Search Endpoints
  * Plugin URI:		http://www.thor-studio.com/
- * Description:	  Custom post-types, menus, filters, image-sizing and taxonomies for the Business Officer wordpress site.
- * Version:		    1.3.0
+ * Description:	  WP-API, REST endpoints that correspond to each custom post-type in the BOM site.
+ * Version:		    1.5.0
  * Author:			  John Serrao
  * Author URI:		https://www.thor.design
  * License:		    CC Attribution-ShareAlike License
@@ -20,26 +20,28 @@
  * 1.1.0: Updated for Mindshift spec requests
  * 1.2.0: In all the endpoints, the publication-date date needs to be changed to be the issue date
  * 1.3.0: date_conversion function added to /util, processes issue date into ISO YYYY-MM-DD format
+ * 1.4.0: Better error handling for date_conversions, tested date_conversion
+ * 1.5.0: Bumped all endpoints to use date_conversion
  * 
  * 
  * ##################################
  * ########### Background ###########
  * ##################################
  * 
- * This plugin creates 4 endpoints ( in the namespace bom/v1):
+ * This plugin creates 4 endpoints (in the namespace bom/v1):
  *  -features
  *  -departments
  *  -nacubo-notes
  *  -business-intel
  * 
  *  These endpoints map to the 4 main custom post-types in the BOM WordPress install.
- *  They are similar yet different in the data models so each deserves its own endpoint
+ *  They are similar yet different in the data models so each deserves its own endpoint.
  *
  *  Technically on the BOM website there are 5 departments (https://www.businessofficermagazine.org/department/)
- *    At the data level, there are 3: departments, nacubo-notes and business-intel
- *    The features and departments post-types have similar data models
- *    Nacubo Notes and Business Intel also have similar data models
- * 
+ *  At the data level, there are 3: departments, nacubo-notes and business-intel
+ *  The features and departments post-types have similar data models (features are posts)
+ *  Nacubo Notes and Business Intel also have similar data models
+ *
  * 
  * #################################
  * ########### Namespace ###########
@@ -48,8 +50,8 @@
  * Namespace is:
  *  /wp-json/bom/v1
  * 
- * This plugin extends WP-API built into WordPress to create these endpoints.
- *  Read more here if you're interested: https://developer.wordpress.org/rest-api/
+ * This plugin extends the WP-API built into WordPress to create these endpoints.
+ * Read more here if you're interested: https://developer.wordpress.org/rest-api/
  * 
  * We're using WP_REST_Controller which automatically puts endpoints at /wp-json
  * We extend that with our own namespace of `bom` and then version with `v1`
@@ -60,26 +62,21 @@
  * ############################################
  * ########### Versioning Endpoints ###########
  * ############################################
- *  This plugin has only one folder right now: v1
- *  This folder contains a separate file for each endpoint
- *  It's important not to break the endpoints once they are in service
- *  Additional revisions to any v1 endpoint should be created in a v2 folder, etc   
+ * 
+ * The /v1 folder contains a separate file for each endpoint
+ * It's important not to break the endpoints once they are in service
+ * Additional revisions to any v1 endpoint should be created in a v2 folder, subsequently updating the version each time.
  */
 
+// BUSINESS INTEL
+include(plugin_dir_path( __FILE__ ) . 'v1/business-intel.php');
 
- /**
-  * v1 Endpoints, listed alphabetically
-  */
+// DEPARTMENTS
+include(plugin_dir_path( __FILE__ ) . 'v1/departments.php');
 
-  // BUSINESS INTEL
-  include(plugin_dir_path( __FILE__ ) . 'v1/business-intel.php');
+// FEATURES
+include(plugin_dir_path( __FILE__ ) . 'v1/features.php');
 
-  // DEPARTMENTS
-  include(plugin_dir_path( __FILE__ ) . 'v1/departments.php');
-
-  // FEATURES
-  include(plugin_dir_path( __FILE__ ) . 'v1/features.php');
-
-  // NACUBO NOTES
-  include(plugin_dir_path( __FILE__ ) . 'v1/nacubo-notes.php');
+// NACUBO NOTES
+include(plugin_dir_path( __FILE__ ) . 'v1/nacubo-notes.php');
 ?>

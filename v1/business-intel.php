@@ -1,6 +1,14 @@
 <?php
   /**
-   * BUSINESS INTEL
+   * BUSINESS INTEL Endpoint
+   */
+
+  /**
+   * include for date_conversion utility
+   */
+  include_once(plugin_dir_path( __DIR__ ) . 'util/date-converter.php');
+
+  /**
    * Extend WP_REST_Controller
    */
   class BI_Posts_Controller extends WP_REST_Controller {
@@ -98,7 +106,7 @@
           // BIZ INTEL PUBLICATION DATE
           // as of v1.2, publication date is now the same as issue date
           // $bi_array[$business_intel_key]['publication-date'] = get_the_date('Y-m-d', $post);
-          $bi_array[$business_intel_key]['publication-date'] = $term->name;
+          $bi_array[$business_intel_key]['publication-date'] = date_conversion( $term->name );
 
           // BIZ INTEL TITLE
           $bi_array[$business_intel_key]['title'] = get_the_title();
@@ -169,7 +177,7 @@
               // BIZ INTEL PUBLICATION DATE
               // as of v1.2, publication date is now the same as issue date
               // $bi_array[$business_intel_key][$content_key]['publication-date'] = $bi_array[$business_intel_key]['publication-date'];
-              $bi_array[$business_intel_key][$content_key]['publication-date'] = $bi_array[$business_intel_key]['issue'];
+              $bi_array[$business_intel_key][$content_key]['publication-date'] = date_conversion( $bi_array[$business_intel_key]['issue'] );
 
               // BIZ INTEL TITLE
               $bi_subtitle = get_sub_field('title'); // kicker is really a topic tag for Bom
@@ -212,7 +220,7 @@
           $bi_array[$business_intel_key]['fast-fact']['image'] = null;
           $bi_array[$business_intel_key]['fast-fact']['issue'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['fast-fact']['modified-date'] = $bi_array[$business_intel_key]['modified-date'];
-          $bi_array[$business_intel_key]['fast-fact']['publication-date'] = $bi_array[$business_intel_key]['issue'];
+          $bi_array[$business_intel_key]['fast-fact']['publication-date'] = date_conversion( $bi_array[$business_intel_key]['issue'] );
           $bi_array[$business_intel_key]['fast-fact']['title'] = $bi_array[$business_intel_key]['title'] . " - Fast Fact";
           $bi_array[$business_intel_key]['fast-fact']['topics'] = null;
           $bi_array[$business_intel_key]['fast-fact']['url'] = $bi_array[$business_intel_key]['url'] . "#fast-fact";
@@ -226,7 +234,7 @@
           $bi_array[$business_intel_key]['quick-clicks']['image'] = null;
           $bi_array[$business_intel_key]['quick-clicks']['issue'] = $bi_array[$business_intel_key]['issue'];
           $bi_array[$business_intel_key]['quick-clicks']['modified-date'] = $bi_array[$business_intel_key]['modified-date'];
-          $bi_array[$business_intel_key]['quick-clicks']['publication-date'] = $bi_array[$business_intel_key]['issue'];
+          $bi_array[$business_intel_key]['quick-clicks']['publication-date'] = date_conversion( $bi_array[$business_intel_key]['issue'] );
           $bi_array[$business_intel_key]['quick-clicks']['title'] = $bi_array[$business_intel_key]['title'] . " - Quick Clicks";
           $bi_array[$business_intel_key]['quick-clicks']['topics'] = null;
           $bi_array[$business_intel_key]['quick-clicks']['url'] = $bi_array[$business_intel_key]['url'] . "#quick-clicks";

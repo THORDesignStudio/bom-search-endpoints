@@ -4,9 +4,9 @@
    */
 
   /**
-   * Gives us access to issue > date converter utility
+   * include for date_conversion utility
    */
-  include(plugin_dir_path( __FILE__ ) . 'util/date-converter.php');
+  include_once(plugin_dir_path( __DIR__ ) . 'util/date-converter.php');
 
   /**
    * Extend WP_REST_Controller

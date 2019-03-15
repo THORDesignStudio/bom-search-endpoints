@@ -1,6 +1,14 @@
 <?php
   /**
-   * DEPARTMENTS
+   * DEPARTMENTS Endpoint
+   */
+
+  /**
+   * include for date_conversion utility
+   */
+  include_once(plugin_dir_path( __DIR__ ) . 'util/date-converter.php');
+
+  /**
    * Extend WP_REST_Controller
    */
   class Departments_Posts_Controller extends WP_REST_Controller {
@@ -125,7 +133,7 @@
           // DEPARTMENTS PUBLICATION DATE
           // as of v1.2, publication data is now the same as issue date
           // $departments_array[$departments_key]['publication-date'] = get_the_date('Y-m-d', $post);
-          $departments_array[$departments_key]['publication-date'] = $department_issue->name;
+          $departments_array[$departments_key]['publication-date'] = date_conversion( $department_issue->name );
 
           // DEPARTMENT TOPICS
           $department_topic_objects = get_field('topics');
