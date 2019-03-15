@@ -28,6 +28,8 @@
       } 
     }
 
+    print_r($year);
+
     // Sniff month | month set options, do manual reformat
     switch ($month) {
       case "january/february":
